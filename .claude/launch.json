@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "cromix-catalog",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["http-server", "C:\\Users\\GEOVANNY\\Desktop\\cromix-catalog", "-p", "3000", "-c-1"],
+      "port": 3000
+    }
+  ]
+}

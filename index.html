@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CROMIX - Catálogo de Ropa Infantil</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/png" href="assets/logo.svg">
+</head>
+<body>
+    <!-- Loader -->
+    <div id="loader" class="loader">
+        <div class="loader-content">
+            <img src="assets/logo.svg" alt="CROMIX" class="loader-logo" onerror="this.style.display='none'">
+            <div class="loader-spinner"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <a href="#" class="logo" onclick="resetFilters(); return false;">
+                <img src="assets/logo.svg" alt="CROMIX" class="logo-img" onerror="this.outerHTML='<span class=\'logo-text\'>CROMIX</span>'">
+            </a>
+            <nav class="nav" id="mainNav">
+                <button class="nav-link active" data-category="todos" onclick="filterCategory('todos')">
+                    <span class="material-icons-round">grid_view</span> Todos
+                </button>
+                <button class="nav-link" data-category="niño" onclick="filterCategory('niño')">
+                    <span class="material-icons-round">boy</span> Niño
+                </button>
+                <button class="nav-link" data-category="niña" onclick="filterCategory('niña')">
+                    <span class="material-icons-round">girl</span> Niña
+                </button>
+                <button class="nav-link" data-category="bebé" onclick="filterCategory('bebé')">
+                    <span class="material-icons-round">child_friendly</span> Bebé
+                </button>
+            </nav>
+            <div class="header-actions">
+                <div class="search-box" id="searchBox">
+                    <span class="material-icons-round search-icon">search</span>
+                    <input type="text" id="searchInput" placeholder="Buscar referencia o nombre..." oninput="searchProducts()">
+                    <button class="search-clear" id="searchClear" onclick="clearSearch()">
+                        <span class="material-icons-round">close</span>
+                    </button>
+                </div>
+                <button class="btn-icon share-btn" onclick="shareLink()" title="Compartir catálogo">
+                    <span class="material-icons-round">share</span>
+                </button>
+                <button class="btn-icon menu-toggle" id="menuToggle" onclick="toggleMobileMenu()">
+                    <span class="material-icons-round">menu</span>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-nav">
+                <button class="mobile-nav-link active" data-category="todos" onclick="filterCategory('todos'); closeMobileMenu();">
+                    <span class="material-icons-round">grid_view</span> Todos
+                </button>
+                <button class="mobile-nav-link" data-category="niño" onclick="filterCategory('niño'); closeMobileMenu();">
+                    <span class="material-icons-round">boy</span> Niño
+                </button>
+                <button class="mobile-nav-link" data-category="niña" onclick="filterCategory('niña'); closeMobileMenu();">
+                    <span class="material-icons-round">girl</span> Niña
+                </button>
+                <button class="mobile-nav-link" data-category="bebé" onclick="filterCategory('bebé'); closeMobileMenu();">
+                    <span class="material-icons-round">child_friendly</span> Bebé
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <div class="hero-brand">
+                <svg class="hero-brand-crown" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 40 L4 15 L18 23 L32 2 L46 23 L60 15 L44 40 Z" fill="#6EC1E4" opacity="0.25" stroke="#6EC1E4" stroke-width="1.5" stroke-linejoin="round"/>
+                    <line x1="32" y1="0" x2="32" y2="-6" stroke="#6EC1E4" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+                    <line x1="22" y1="4" x2="18" y2="-1" stroke="#6EC1E4" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+                    <line x1="42" y1="4" x2="46" y2="-1" stroke="#6EC1E4" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+                </svg>
+                <h1 class="hero-brand-name">CROMIX</h1>
+            </div>
+            <h2 class="hero-title">Colección <span class="highlight">2026</span></h2>
+            <p class="hero-subtitle">Moda infantil que inspira alegría</p>
+            <div class="hero-categories">
+                <button class="hero-cat-btn hero-cat-nino" onclick="filterCategory('niño'); scrollToCatalog();">
+                    <div class="hero-cat-icon-wrap">
+                        <svg class="hero-cat-svg" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Boy silhouette with cap -->
+                            <circle cx="40" cy="40" r="38" fill="#E8F7FC" stroke="#6EC1E4" stroke-width="1.5"/>
+                            <!-- Head -->
+                            <circle cx="40" cy="32" r="12" fill="#6EC1E4" opacity="0.2"/>
+                            <circle cx="40" cy="32" r="12" stroke="#6EC1E4" stroke-width="1.5" fill="none"/>
+                            <!-- Cap -->
+                            <path d="M28 30 Q28 22 40 22 Q52 22 52 30" stroke="#6EC1E4" stroke-width="1.5" fill="#6EC1E4" opacity="0.3"/>
+                            <path d="M26 30 L54 30" stroke="#6EC1E4" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="52" cy="29" r="2" fill="#6EC1E4"/>
+                            <!-- Body / T-shirt -->
+                            <path d="M28 48 Q28 44 32 44 L40 44 L48 44 Q52 44 52 48 L54 60 Q54 62 52 62 L28 62 Q26 62 26 60 Z" fill="#6EC1E4" opacity="0.15" stroke="#6EC1E4" stroke-width="1.5"/>
+                            <!-- Collar -->
+                            <path d="M36 44 L40 48 L44 44" stroke="#6EC1E4" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            <!-- Eyes -->
+                            <circle cx="36" cy="31" r="1.2" fill="#6EC1E4"/>
+                            <circle cx="44" cy="31" r="1.2" fill="#6EC1E4"/>
+                            <!-- Smile -->
+                            <path d="M37 35 Q40 38 43 35" stroke="#6EC1E4" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+                            <!-- Star decoration -->
+                            <path d="M58 16 L59.5 19 L63 19.5 L60.5 22 L61 25.5 L58 24 L55 25.5 L55.5 22 L53 19.5 L56.5 19 Z" fill="#FFD966" opacity="0.7"/>
+                        </svg>
+                    </div>
+                    <span class="hero-cat-label">Niño</span>
+                    <span class="hero-cat-sub">Tallas 4 - 16</span>
+                </button>
+                <button class="hero-cat-btn hero-cat-nina" onclick="filterCategory('niña'); scrollToCatalog();">
+                    <div class="hero-cat-icon-wrap">
+                        <svg class="hero-cat-svg" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Girl silhouette with bow -->
+                            <circle cx="40" cy="40" r="38" fill="#FFF0F5" stroke="#F8A4C8" stroke-width="1.5"/>
+                            <!-- Head -->
+                            <circle cx="40" cy="32" r="12" fill="#F8A4C8" opacity="0.15"/>
+                            <circle cx="40" cy="32" r="12" stroke="#F8A4C8" stroke-width="1.5" fill="none"/>
+                            <!-- Hair -->
+                            <path d="M28 32 Q28 20 40 20 Q52 20 52 32" stroke="#F8A4C8" stroke-width="1.5" fill="#F8A4C8" opacity="0.2"/>
+                            <path d="M28 32 Q27 40 26 44" stroke="#F8A4C8" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M52 32 Q53 40 54 44" stroke="#F8A4C8" stroke-width="2" stroke-linecap="round"/>
+                            <!-- Bow -->
+                            <path d="M48 22 Q52 18 54 22 Q52 24 48 22 Z" fill="#F8A4C8" opacity="0.5" stroke="#F8A4C8" stroke-width="1"/>
+                            <path d="M54 22 Q58 18 56 15 Q54 18 54 22 Z" fill="#F8A4C8" opacity="0.5" stroke="#F8A4C8" stroke-width="1"/>
+                            <circle cx="54" cy="22" r="1.5" fill="#F8A4C8"/>
+                            <!-- Dress -->
+                            <path d="M30 46 L32 44 L40 44 L48 44 L50 46 L56 62 Q56 64 54 64 L26 64 Q24 64 24 62 Z" fill="#F8A4C8" opacity="0.15" stroke="#F8A4C8" stroke-width="1.5"/>
+                            <!-- Waist ribbon -->
+                            <path d="M30 48 L50 48" stroke="#F8A4C8" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M38 48 L40 51 L42 48" stroke="#F8A4C8" stroke-width="1.2" fill="#F8A4C8" opacity="0.3"/>
+                            <!-- Eyes -->
+                            <circle cx="36" cy="31" r="1.2" fill="#F8A4C8"/>
+                            <circle cx="44" cy="31" r="1.2" fill="#F8A4C8"/>
+                            <!-- Eyelashes -->
+                            <path d="M34 29.5 L35 30.5" stroke="#F8A4C8" stroke-width="0.8" stroke-linecap="round"/>
+                            <path d="M46 29.5 L45 30.5" stroke="#F8A4C8" stroke-width="0.8" stroke-linecap="round"/>
+                            <!-- Smile -->
+                            <path d="M37 35 Q40 38 43 35" stroke="#F8A4C8" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+                            <!-- Heart decoration -->
+                            <path d="M17 20 C17 18 19 16 21 18 C23 16 25 18 25 20 C25 23 21 26 21 26 C21 26 17 23 17 20 Z" fill="#F8A4C8" opacity="0.4"/>
+                        </svg>
+                    </div>
+                    <span class="hero-cat-label">Niña</span>
+                    <span class="hero-cat-sub">Tallas 4 - 16</span>
+                </button>
+                <button class="hero-cat-btn hero-cat-bebe" onclick="filterCategory('bebé'); scrollToCatalog();">
+                    <div class="hero-cat-icon-wrap">
+                        <svg class="hero-cat-svg" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Baby silhouette with onesie -->
+                            <circle cx="40" cy="40" r="38" fill="#FFF8E7" stroke="#FFD966" stroke-width="1.5"/>
+                            <!-- Head (bigger for baby proportions) -->
+                            <circle cx="40" cy="28" r="14" fill="#FFD966" opacity="0.15"/>
+                            <circle cx="40" cy="28" r="14" stroke="#FFD966" stroke-width="1.5" fill="none"/>
+                            <!-- Little hair curl -->
+                            <path d="M38 14 Q36 12 38 11 Q40 10 41 13" stroke="#FFD966" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                            <path d="M42 14 Q44 11 43 10" stroke="#FFD966" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                            <!-- Onesie / Body -->
+                            <path d="M30 44 L32 42 L48 42 L50 44 L52 56 Q52 60 50 60 L46 60 L46 64 Q46 66 44 66 L36 66 Q34 66 34 64 L34 60 L30 60 Q28 60 28 56 Z" fill="#FFD966" opacity="0.15" stroke="#FFD966" stroke-width="1.5"/>
+                            <!-- Buttons on onesie -->
+                            <circle cx="40" cy="48" r="1.5" fill="#FFD966" opacity="0.6"/>
+                            <circle cx="40" cy="53" r="1.5" fill="#FFD966" opacity="0.6"/>
+                            <!-- Eyes (big cute baby eyes) -->
+                            <circle cx="35" cy="27" r="2" fill="#FFD966" opacity="0.5"/>
+                            <circle cx="35" cy="27" r="1" fill="#7a6200" opacity="0.6"/>
+                            <circle cx="45" cy="27" r="2" fill="#FFD966" opacity="0.5"/>
+                            <circle cx="45" cy="27" r="1" fill="#7a6200" opacity="0.6"/>
+                            <!-- Blush cheeks -->
+                            <circle cx="31" cy="31" r="2.5" fill="#F8A4C8" opacity="0.2"/>
+                            <circle cx="49" cy="31" r="2.5" fill="#F8A4C8" opacity="0.2"/>
+                            <!-- Smile -->
+                            <path d="M37 33 Q40 36 43 33" stroke="#FFD966" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+                            <!-- Pacifier -->
+                            <circle cx="40" cy="37" r="2" stroke="#A8D8B9" stroke-width="1" fill="#A8D8B9" opacity="0.4"/>
+                            <circle cx="40" cy="37" r="0.8" fill="#A8D8B9" opacity="0.6"/>
+                            <!-- Stars -->
+                            <path d="M60 12 L61 14.5 L63.5 15 L61.5 17 L62 19.5 L60 18.5 L58 19.5 L58.5 17 L56.5 15 L59 14.5 Z" fill="#C9B1FF" opacity="0.5"/>
+                            <path d="M18 52 L19 54 L21 54.5 L19.5 56 L20 58 L18 57 L16 58 L16.5 56 L15 54.5 L17 54 Z" fill="#A8D8B9" opacity="0.5"/>
+                        </svg>
+                    </div>
+                    <span class="hero-cat-label">Bebé</span>
+                    <span class="hero-cat-sub">Tallas 6-9 a 24-36</span>
+                </button>
+            </div>
+        </div>
+        <div class="hero-decoration">
+            <div class="circle c1"></div>
+            <div class="circle c2"></div>
+            <div class="circle c3"></div>
+            <div class="star s1">✦</div>
+            <div class="star s2">✦</div>
+            <div class="star s3">✦</div>
+        </div>
+    </section>
+
+    <!-- Filters Bar -->
+    <section class="filters-bar" id="filtersBar">
+        <div class="filters-inner">
+            <div class="filter-group">
+                <label class="filter-label">
+                    <span class="material-icons-round">straighten</span> Talla:
+                </label>
+                <div class="size-chips" id="sizeChips">
+                    <button class="size-chip active" data-size="todas" onclick="filterSize('todas')">Todas</button>
+                </div>
+            </div>
+            <div class="results-count" id="resultsCount">
+                <span id="countNumber">0</span> productos
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalog Grid -->
+    <main class="catalog" id="catalog">
+        <div class="catalog-grid" id="catalogGrid">
+            <!-- Products will be injected here -->
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <span class="material-icons-round empty-icon">inventory_2</span>
+            <h3>No se encontraron productos</h3>
+            <p>Intenta con otra búsqueda o categoría</p>
+            <button class="btn-primary" onclick="resetFilters()">Ver todos los productos</button>
+        </div>
+    </main>
+
+    <!-- Product Modal -->
+    <div class="modal-overlay" id="productModal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeProductModal()">
+                <span class="material-icons-round">close</span>
+            </button>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modalImage" src="" alt="Producto">
+                </div>
+                <div class="modal-info">
+                    <span class="modal-category" id="modalCategory"></span>
+                    <h2 class="modal-name" id="modalName"></h2>
+                    <div class="modal-meta">
+                        <div class="meta-item">
+                            <span class="material-icons-round">qr_code</span>
+                            <span id="modalSku"></span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="material-icons-round">straighten</span>
+                            Talla: <span id="modalSize"></span>
+                        </div>
+                    </div>
+                    <p class="modal-description" id="modalDescription"></p>
+                    <div class="modal-actions">
+                        <button class="btn-primary btn-download" onclick="downloadCurrentImage()">
+                            <span class="material-icons-round">download</span> Descargar imagen
+                        </button>
+                        <button class="btn-secondary" onclick="shareProduct()">
+                            <span class="material-icons-round">share</span> Compartir
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Toast -->
+    <div class="toast" id="toast">
+        <span class="material-icons-round">check_circle</span>
+        <span id="toastMessage">Enlace copiado al portapapeles</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <img src="assets/logo.svg" alt="CROMIX" class="footer-logo" onerror="this.outerHTML='<span class=\'logo-text\'>CROMIX</span>'">
+                <p>Moda infantil con estilo y calidad</p>
+            </div>
+            <div class="footer-links">
+                <h4>Categorías</h4>
+                <a href="#" onclick="filterCategory('niño'); scrollToCatalog(); return false;">Niño</a>
+                <a href="#" onclick="filterCategory('niña'); scrollToCatalog(); return false;">Niña</a>
+                <a href="#" onclick="filterCategory('bebé'); scrollToCatalog(); return false;">Bebé</a>
+            </div>
+            <div class="footer-links">
+                <h4>Contacto</h4>
+                <p><span class="material-icons-round">email</span> info@cromix.com</p>
+                <p><span class="material-icons-round">phone</span> +57 300 878 7751</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 CROMIX. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Admin Access (hidden) - Triple click on footer copyright -->
+    <script src="js/app.js"></script>
+</body>
+</html>

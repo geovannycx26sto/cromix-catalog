@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CROMIX - Panel de Administración</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/png" href="assets/logo.svg">
+</head>
+<body>
+    <!-- Admin Header -->
+    <header class="header admin-header">
+        <div class="header-inner">
+            <div style="display:flex; align-items:center; gap:16px;">
+                <a href="index.html" class="logo">
+                    <span class="logo-text" style="color:white;">CROMIX</span>
+                </a>
+                <span class="admin-badge">
+                    <span class="material-icons-round" style="font-size:14px;">admin_panel_settings</span>
+                    ADMIN
+                </span>
+            </div>
+            <div class="header-actions">
+                <a href="index.html" class="btn-secondary" style="color:white; border-color:rgba(255,255,255,0.3);">
+                    <span class="material-icons-round">visibility</span> Ver catálogo
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div style="height: var(--header-height);"></div>
+
+    <div class="admin-container">
+        <!-- Stats -->
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:16px; margin-bottom:32px;">
+            <div style="background:white; padding:24px; border-radius:var(--radius-md); border:1px solid var(--border); text-align:center;">
+                <div style="font-size:32px; font-weight:900; color:var(--primary);" id="statTotal">0</div>
+                <div style="font-size:13px; color:var(--text-muted); font-weight:600;">Total productos</div>
+            </div>
+            <div style="background:white; padding:24px; border-radius:var(--radius-md); border:1px solid var(--border); text-align:center;">
+                <div style="font-size:32px; font-weight:900; color:#6EC1E4;" id="statNino">0</div>
+                <div style="font-size:13px; color:var(--text-muted); font-weight:600;">Niño</div>
+            </div>
+            <div style="background:white; padding:24px; border-radius:var(--radius-md); border:1px solid var(--border); text-align:center;">
+                <div style="font-size:32px; font-weight:900; color:#F8A4C8;" id="statNina">0</div>
+                <div style="font-size:13px; color:var(--text-muted); font-weight:600;">Niña</div>
+            </div>
+            <div style="background:white; padding:24px; border-radius:var(--radius-md); border:1px solid var(--border); text-align:center;">
+                <div style="font-size:32px; font-weight:900; color:#FFD966;" id="statBebe">0</div>
+                <div style="font-size:13px; color:var(--text-muted); font-weight:600;">Bebé</div>
+            </div>
+        </div>
+
+        <!-- Upload Section - Step by Step -->
+        <section class="upload-section">
+            <h2>
+                <span class="material-icons-round" style="color:var(--primary);">add_circle</span>
+                Agregar producto
+            </h2>
+
+            <!-- Step indicators -->
+            <div class="steps-indicator" id="stepsIndicator">
+                <div class="step-dot active" data-step="1">
+                    <span class="step-number">1</span>
+                    <span class="step-label">Categoría</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step-dot" data-step="2">
+                    <span class="step-number">2</span>
+                    <span class="step-label">Imagen</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step-dot" data-step="3">
+                    <span class="step-number">3</span>
+                    <span class="step-label">Detalles y tallas</span>
+                </div>
+            </div>
+
+            <!-- STEP 1: Category selection -->
+            <div class="step-panel" id="step1">
+                <div class="product-form" style="text-align:center; padding:40px 32px;">
+                    <h3 style="margin-bottom:8px; font-size:20px;">¿Para quién es esta prenda?</h3>
+                    <p style="color:var(--text-muted); margin-bottom:28px; font-size:14px;">Selecciona la categoría del producto</p>
+                    <div class="category-selector">
+                        <button class="cat-select-btn" onclick="selectCategory('niño')" data-cat="niño">
+                            <div class="cat-select-icon" style="background:#E8F7FC; color:#6EC1E4;">
+                                <span class="material-icons-round">boy</span>
+                            </div>
+                            <span class="cat-select-name">Niño</span>
+                            <span class="cat-select-sizes">Tallas 4 - 16</span>
+                        </button>
+                        <button class="cat-select-btn" onclick="selectCategory('niña')" data-cat="niña">
+                            <div class="cat-select-icon" style="background:#FFF0F5; color:#F8A4C8;">
+                                <span class="material-icons-round">girl</span>
+                            </div>
+                            <span class="cat-select-name">Niña</span>
+                            <span class="cat-select-sizes">Tallas 4 - 16</span>
+                        </button>
+                        <button class="cat-select-btn" onclick="selectCategory('bebé')" data-cat="bebé">
+                            <div class="cat-select-icon" style="background:#FFF8E7; color:#D4A017;">
+                                <span class="material-icons-round">child_friendly</span>
+                            </div>
+                            <span class="cat-select-name">Bebé</span>
+                            <span class="cat-select-sizes">Tallas 6-9 a 24-36</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 2: Image upload -->
+            <div class="step-panel" id="step2" style="display:none;">
+                <div class="product-form" style="padding:32px;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
+                        <div>
+                            <h3 style="font-size:20px; margin-bottom:4px;">Sube la imagen del producto</h3>
+                            <p style="color:var(--text-muted); font-size:14px;">
+                                Categoría seleccionada: <span class="selected-cat-badge" id="step2CatBadge"></span>
+                            </p>
+                        </div>
+                        <button class="btn-secondary" onclick="goToStep(1)" style="font-size:13px; padding:8px 16px;">
+                            <span class="material-icons-round" style="font-size:16px;">arrow_back</span> Cambiar categoría
+                        </button>
+                    </div>
+                    <div class="upload-zone" id="uploadZone">
+                        <span class="material-icons-round">cloud_upload</span>
+                        <h3>Arrastra una imagen aquí</h3>
+                        <p>o haz clic para seleccionar un archivo</p>
+                        <button class="btn-primary" onclick="document.getElementById('fileInput').click(); event.stopPropagation();">
+                            <span class="material-icons-round">image</span> Seleccionar imagen
+                        </button>
+                        <input type="file" id="fileInput" accept="image/*" style="display:none;" onchange="handleFileSelect(event)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 3: Details + Multi-size selection -->
+            <div class="step-panel" id="step3" style="display:none;">
+                <div class="product-form">
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:24px;">
+                        <h3 style="font-size:20px;">Detalles del producto</h3>
+                        <button class="btn-secondary" onclick="goToStep(2)" style="font-size:13px; padding:8px 16px;">
+                            <span class="material-icons-round" style="font-size:16px;">arrow_back</span> Cambiar imagen
+                        </button>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-preview" id="formPreview">
+                            <img id="previewImage" src="" alt="Preview">
+                            <div class="preview-cat-badge" id="previewCatBadge"></div>
+                        </div>
+                        <div class="form-fields">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Nombre del producto *</label>
+                                    <input type="text" id="inputName" placeholder="Ej: Camiseta Rayas Ocean">
+                                </div>
+                                <div class="form-group">
+                                    <label>Código SKU *</label>
+                                    <input type="text" id="inputSku" placeholder="Ej: CRX-N001">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Descripción</label>
+                                <textarea id="inputDescription" placeholder="Descripción breve del producto..."></textarea>
+                            </div>
+
+                            <!-- Multi-size selector -->
+                            <div class="form-group">
+                                <label>Tallas disponibles *</label>
+                                <p style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">
+                                    Selecciona una o varias tallas. Se creará un producto por cada talla seleccionada con la misma imagen.
+                                </p>
+                                <div class="size-multi-selector" id="sizeMultiSelector">
+                                    <!-- Size checkboxes will be rendered here -->
+                                </div>
+                                <button class="select-all-btn" onclick="toggleAllSizes()" id="selectAllBtn">
+                                    <span class="material-icons-round" style="font-size:16px;">select_all</span> Seleccionar todas
+                                </button>
+                            </div>
+
+                            <div class="form-actions">
+                                <button class="btn-primary" onclick="saveProduct()">
+                                    <span class="material-icons-round">save</span>
+                                    <span id="saveBtnText">Guardar producto</span>
+                                </button>
+                                <button class="btn-secondary" onclick="cancelForm()">
+                                    <span class="material-icons-round">close</span> Cancelar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product List -->
+        <section class="admin-products">
+            <h2>
+                <span class="material-icons-round" style="color:var(--primary);">inventory_2</span>
+                Productos registrados
+            </h2>
+
+            <!-- Filter tabs -->
+            <div style="display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap;">
+                <button class="size-chip active" onclick="adminFilter('todos', this)">Todos</button>
+                <button class="size-chip" onclick="adminFilter('niño', this)">Niño</button>
+                <button class="size-chip" onclick="adminFilter('niña', this)">Niña</button>
+                <button class="size-chip" onclick="adminFilter('bebé', this)">Bebé</button>
+            </div>
+
+            <div id="adminProductList">
+                <!-- Products will be rendered here -->
+            </div>
+        </section>
+
+        <!-- Bulk Actions -->
+        <section style="margin-top:40px; padding:24px; background:#FEF3C7; border-radius:var(--radius-md); border:1px solid #FDE68A;">
+            <h3 style="display:flex; align-items:center; gap:8px; margin-bottom:12px; font-size:16px;">
+                <span class="material-icons-round" style="color:#D97706;">warning</span>
+                Zona de peligro
+            </h3>
+            <p style="font-size:14px; color:var(--text-light); margin-bottom:16px;">
+                Esta acción eliminará todos los productos del catálogo. No se puede deshacer.
+            </p>
+            <button class="btn-danger" onclick="deleteAllProducts()">
+                <span class="material-icons-round">delete_forever</span> Eliminar todos los productos
+            </button>
+        </section>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <span class="material-icons-round">check_circle</span>
+        <span id="toastMessage">Producto guardado</span>
+    </div>
+
+    <script>
+        /* ============================================
+           CROMIX - Admin Panel Logic (Step Flow)
+           ============================================ */
+
+        const SIZES = {
+            'niño': ['4', '6', '8', '10', '12', '14', '16'],
+            'niña': ['4', '6', '8', '10', '12', '14', '16'],
+            'bebé': ['6-9', '9-12', '12-18', '18-24', '24-36']
+        };
+
+        const CAT_COLORS = {
+            'niño': { bg: '#E8F7FC', color: '#6EC1E4', label: 'Niño' },
+            'niña': { bg: '#FFF0F5', color: '#F8A4C8', label: 'Niña' },
+            'bebé': { bg: '#FFF8E7', color: '#D4A017', label: 'Bebé' }
+        };
+
+        let currentStep = 1;
+        let selectedCategory = '';
+        let currentImageData = '';
+        let selectedSizes = [];
+        let editingProductId = null;
+        let adminCategoryFilter = 'todos';
+
+        // --- Database ---
+        function getProducts() {
+            try { return JSON.parse(localStorage.getItem('cromix_products') || '[]'); }
+            catch { return []; }
+        }
+
+        function saveProducts(products) {
+            localStorage.setItem('cromix_products', JSON.stringify(products));
+        }
+
+        // ===========================
+        // STEP NAVIGATION
+        // ===========================
+        function goToStep(step) {
+            document.querySelectorAll('.step-panel').forEach(p => p.style.display = 'none');
+            document.getElementById('step' + step).style.display = 'block';
+
+            // Update step indicators
+            document.querySelectorAll('.step-dot').forEach(dot => {
+                const s = parseInt(dot.dataset.step);
+                dot.classList.toggle('active', s === step);
+                dot.classList.toggle('completed', s < step);
+            });
+
+            currentStep = step;
+
+            // Scroll to section
+            document.getElementById('step' + step).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // ===========================
+        // STEP 1: Category Selection
+        // ===========================
+        function selectCategory(category) {
+            selectedCategory = category;
+
+            // Highlight selected button
+            document.querySelectorAll('.cat-select-btn').forEach(btn => {
+                btn.classList.toggle('selected', btn.dataset.cat === category);
+            });
+
+            // Update badge in step 2
+            const catInfo = CAT_COLORS[category];
+            const badge = document.getElementById('step2CatBadge');
+            badge.textContent = catInfo.label;
+            badge.style.background = catInfo.bg;
+            badge.style.color = catInfo.color;
+
+            // Render size checkboxes for step 3
+            renderSizeCheckboxes(category);
+
+            // Auto-advance to step 2 after brief delay
+            setTimeout(() => goToStep(2), 300);
+        }
+
+        // ===========================
+        // STEP 2: Image Upload
+        // ===========================
+        function setupUploadZone() {
+            const uploadZone = document.getElementById('uploadZone');
+
+            uploadZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadZone.classList.add('dragover');
+            });
+
+            uploadZone.addEventListener('dragleave', () => {
+                uploadZone.classList.remove('dragover');
+            });
+
+            uploadZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadZone.classList.remove('dragover');
+                const file = e.dataTransfer.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    processImage(file);
+                }
+            });
+
+            uploadZone.addEventListener('click', (e) => {
+                if (e.target.tagName !== 'BUTTON') {
+                    document.getElementById('fileInput').click();
+                }
+            });
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) processImage(file);
+        }
+
+        function processImage(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const MAX = 800;
+                    let w = img.width, h = img.height;
+
+                    if (w > MAX || h > MAX) {
+                        if (w > h) { h = (h / w) * MAX; w = MAX; }
+                        else { w = (w / h) * MAX; h = MAX; }
+                    }
+
+                    canvas.width = w;
+                    canvas.height = h;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, w, h);
+
+                    currentImageData = canvas.toDataURL('image/jpeg', 0.8);
+                    document.getElementById('previewImage').src = currentImageData;
+
+                    // Update preview badge
+                    const catInfo = CAT_COLORS[selectedCategory];
+                    const previewBadge = document.getElementById('previewCatBadge');
+                    previewBadge.textContent = catInfo.label;
+                    previewBadge.style.background = catInfo.color;
+                    previewBadge.style.color = 'white';
+
+                    // Advance to step 3
+                    setTimeout(() => goToStep(3), 200);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ===========================
+        // STEP 3: Details + Multi-size
+        // ===========================
+        function renderSizeCheckboxes(category) {
+            const container = document.getElementById('sizeMultiSelector');
+            const sizes = SIZES[category] || [];
+
+            container.innerHTML = sizes.map(size => `
+                <label class="size-check-item" data-size="${size}">
+                    <input type="checkbox" value="${size}" onchange="handleSizeToggle(this)">
+                    <span class="size-check-box">
+                        <span class="material-icons-round size-check-icon">check</span>
+                    </span>
+                    <span class="size-check-label">Talla ${size}</span>
+                </label>
+            `).join('');
+
+            selectedSizes = [];
+            updateSaveButtonText();
+        }
+
+        function handleSizeToggle(checkbox) {
+            const size = checkbox.value;
+            const label = checkbox.closest('.size-check-item');
+
+            if (checkbox.checked) {
+                if (!selectedSizes.includes(size)) selectedSizes.push(size);
+                label.classList.add('checked');
+            } else {
+                selectedSizes = selectedSizes.filter(s => s !== size);
+                label.classList.remove('checked');
+            }
+
+            updateSaveButtonText();
+            updateSelectAllBtn();
+        }
+
+        function toggleAllSizes() {
+            const checkboxes = document.querySelectorAll('#sizeMultiSelector input[type="checkbox"]');
+            const allChecked = selectedSizes.length === checkboxes.length;
+
+            checkboxes.forEach(cb => {
+                cb.checked = !allChecked;
+                cb.closest('.size-check-item').classList.toggle('checked', !allChecked);
+            });
+
+            if (allChecked) {
+                selectedSizes = [];
+            } else {
+                selectedSizes = Array.from(checkboxes).map(cb => cb.value);
+            }
+
+            updateSaveButtonText();
+            updateSelectAllBtn();
+        }
+
+        function updateSelectAllBtn() {
+            const checkboxes = document.querySelectorAll('#sizeMultiSelector input[type="checkbox"]');
+            const allChecked = selectedSizes.length === checkboxes.length;
+            const btn = document.getElementById('selectAllBtn');
+            btn.innerHTML = allChecked
+                ? '<span class="material-icons-round" style="font-size:16px;">deselect</span> Deseleccionar todas'
+                : '<span class="material-icons-round" style="font-size:16px;">select_all</span> Seleccionar todas';
+        }
+
+        function updateSaveButtonText() {
+            const btn = document.getElementById('saveBtnText');
+            if (editingProductId) {
+                btn.textContent = 'Actualizar producto';
+            } else if (selectedSizes.length <= 1) {
+                btn.textContent = 'Guardar producto';
+            } else {
+                btn.textContent = `Guardar en ${selectedSizes.length} tallas`;
+            }
+        }
+
+        // ===========================
+        // SAVE
+        // ===========================
+        function saveProduct() {
+            const name = document.getElementById('inputName').value.trim();
+            const sku = document.getElementById('inputSku').value.trim();
+            const description = document.getElementById('inputDescription').value.trim();
+
+            if (!name || !sku) {
+                showToast('Completa el nombre y código SKU');
+                return;
+            }
+
+            if (!selectedCategory) {
+                showToast('Selecciona una categoría');
+                return;
+            }
+
+            if (selectedSizes.length === 0) {
+                showToast('Selecciona al menos una talla');
+                return;
+            }
+
+            const products = getProducts();
+
+            if (editingProductId) {
+                // Edit mode: update single product
+                const idx = products.findIndex(p => p.id === editingProductId);
+                if (idx !== -1) {
+                    products[idx] = {
+                        ...products[idx],
+                        name, sku, category: selectedCategory,
+                        size: selectedSizes[0],
+                        description,
+                        image: currentImageData || products[idx].image
+                    };
+                }
+                saveProducts(products);
+                showToast('Producto actualizado');
+            } else {
+                // Create mode: one product per selected size
+                const timestamp = Date.now();
+                selectedSizes.forEach((size, i) => {
+                    products.push({
+                        id: (timestamp + i).toString(),
+                        name,
+                        sku: selectedSizes.length > 1 ? `${sku}-T${size}` : sku,
+                        category: selectedCategory,
+                        size,
+                        description,
+                        image: currentImageData,
+                        createdAt: timestamp + i
+                    });
+                });
+                saveProducts(products);
+
+                if (selectedSizes.length > 1) {
+                    showToast(`${selectedSizes.length} productos creados (1 por talla)`);
+                } else {
+                    showToast('Producto guardado correctamente');
+                }
+            }
+
+            cancelForm();
+            renderAdminProducts();
+            updateStats();
+        }
+
+        // ===========================
+        // CANCEL / RESET
+        // ===========================
+        function cancelForm() {
+            // Reset all state
+            selectedCategory = '';
+            currentImageData = '';
+            selectedSizes = [];
+            editingProductId = null;
+
+            // Reset form fields
+            document.getElementById('inputName').value = '';
+            document.getElementById('inputSku').value = '';
+            document.getElementById('inputDescription').value = '';
+            document.getElementById('fileInput').value = '';
+
+            // Reset category selection visual
+            document.querySelectorAll('.cat-select-btn').forEach(b => b.classList.remove('selected'));
+
+            // Reset upload zone
+            document.getElementById('uploadZone').style.display = '';
+
+            // Go back to step 1
+            goToStep(1);
+        }
+
+        // ===========================
+        // EDIT PRODUCT
+        // ===========================
+        function editProduct(id) {
+            const products = getProducts();
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            editingProductId = id;
+            selectedCategory = product.category;
+            currentImageData = product.image || '';
+
+            // Set category
+            document.querySelectorAll('.cat-select-btn').forEach(btn => {
+                btn.classList.toggle('selected', btn.dataset.cat === product.category);
+            });
+
+            // Update badge
+            const catInfo = CAT_COLORS[product.category];
+            document.getElementById('step2CatBadge').textContent = catInfo.label;
+            document.getElementById('step2CatBadge').style.background = catInfo.bg;
+            document.getElementById('step2CatBadge').style.color = catInfo.color;
+
+            // Set image
+            const imgSrc = product.image || getPlaceholderSVG(product.category, product.name);
+            document.getElementById('previewImage').src = imgSrc;
+
+            const previewBadge = document.getElementById('previewCatBadge');
+            previewBadge.textContent = catInfo.label;
+            previewBadge.style.background = catInfo.color;
+            previewBadge.style.color = 'white';
+
+            // Set form fields
+            document.getElementById('inputName').value = product.name;
+            // Remove size suffix from SKU if present
+            const baseSku = product.sku.replace(/-T[\d-]+$/, '');
+            document.getElementById('inputSku').value = baseSku;
+            document.getElementById('inputDescription').value = product.description || '';
+
+            // Render sizes and pre-select current one
+            renderSizeCheckboxes(product.category);
+            const checkbox = document.querySelector(`#sizeMultiSelector input[value="${product.size}"]`);
+            if (checkbox) {
+                checkbox.checked = true;
+                checkbox.closest('.size-check-item').classList.add('checked');
+                selectedSizes = [product.size];
+            }
+
+            updateSaveButtonText();
+
+            // Jump to step 3
+            goToStep(3);
+            document.getElementById('step3').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ===========================
+        // DELETE
+        // ===========================
+        function deleteProduct(id) {
+            if (!confirm('¿Estás seguro de eliminar este producto?')) return;
+
+            let products = getProducts();
+            products = products.filter(p => p.id !== id);
+            saveProducts(products);
+            renderAdminProducts();
+            updateStats();
+            showToast('Producto eliminado');
+        }
+
+        function deleteAllProducts() {
+            if (!confirm('¿Estás seguro de eliminar TODOS los productos? Esta acción no se puede deshacer.')) return;
+            if (!confirm('Esta es tu última oportunidad. ¿Realmente deseas eliminar todo?')) return;
+
+            saveProducts([]);
+            localStorage.removeItem('cromix_initialized');
+            renderAdminProducts();
+            updateStats();
+            showToast('Todos los productos han sido eliminados');
+        }
+
+        // ===========================
+        // PLACEHOLDER
+        // ===========================
+        function getPlaceholderSVG(category, name) {
+            const colors = {
+                'niño': { bg: '#E8F7FC', fg: '#6EC1E4' },
+                'niña': { bg: '#FFF0F5', fg: '#F8A4C8' },
+                'bebé': { bg: '#FFF8E7', fg: '#FFD966' }
+            };
+            const c = colors[category] || colors['niño'];
+            const initials = name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
+            return `data:image/svg+xml,${encodeURIComponent(`
+                <svg xmlns="http://www.w3.org/2000/svg" width="200" height="260" viewBox="0 0 200 260">
+                    <rect width="200" height="260" fill="${c.bg}"/>
+                    <text x="100" y="130" text-anchor="middle" fill="${c.fg}" font-family="sans-serif" font-size="48" font-weight="bold" opacity="0.4">${initials}</text>
+                </svg>
+            `)}`;
+        }
+
+        // ===========================
+        // RENDER ADMIN PRODUCTS
+        // ===========================
+        function renderAdminProducts() {
+            const products = getProducts();
+            const list = document.getElementById('adminProductList');
+
+            let filtered = products;
+            if (adminCategoryFilter !== 'todos') {
+                filtered = products.filter(p => p.category === adminCategoryFilter);
+            }
+
+            if (filtered.length === 0) {
+                list.innerHTML = `
+                    <div style="text-align:center; padding:48px; color:var(--text-muted);">
+                        <span class="material-icons-round" style="font-size:48px; display:block; margin-bottom:12px;">inventory_2</span>
+                        <p>No hay productos ${adminCategoryFilter !== 'todos' ? 'en esta categoría' : 'registrados'}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = filtered.map(product => {
+                const imgSrc = product.image || getPlaceholderSVG(product.category, product.name);
+                return `
+                    <div class="admin-product-item">
+                        <div class="admin-product-thumb">
+                            <img src="${imgSrc}" alt="${product.name}">
+                        </div>
+                        <div class="admin-product-info">
+                            <h4>${product.name}</h4>
+                            <span>${product.sku} · ${product.category} · Talla ${product.size}</span>
+                        </div>
+                        <div class="admin-product-actions">
+                            <button class="btn-edit" onclick="editProduct('${product.id}')">
+                                <span class="material-icons-round" style="font-size:16px;">edit</span> Editar
+                            </button>
+                            <button class="btn-danger" onclick="deleteProduct('${product.id}')">
+                                <span class="material-icons-round" style="font-size:16px;">delete</span> Eliminar
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function adminFilter(category, btn) {
+            adminCategoryFilter = category;
+            document.querySelectorAll('.admin-products .size-chip').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            renderAdminProducts();
+        }
+
+        function updateStats() {
+            const products = getProducts();
+            document.getElementById('statTotal').textContent = products.length;
+            document.getElementById('statNino').textContent = products.filter(p => p.category === 'niño').length;
+            document.getElementById('statNina').textContent = products.filter(p => p.category === 'niña').length;
+            document.getElementById('statBebe').textContent = products.filter(p => p.category === 'bebé').length;
+        }
+
+        // --- Toast ---
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // --- Init ---
+        document.addEventListener('DOMContentLoaded', () => {
+            setupUploadZone();
+            renderAdminProducts();
+            updateStats();
+        });
+    </script>
+</body>
+</html>
