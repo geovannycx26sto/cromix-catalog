@@ -35,22 +35,25 @@
 
     <div class="admin-container">
         <!-- Stats -->
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:16px; margin-bottom:32px;">
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap:16px; margin-bottom:32px;">
             <div style="background:white; padding:24px; border-radius:var(--radius-md); border:1px solid var(--border); text-align:center;">
                 <div style="font-size:32px; font-weight:900; color:var(--primary);" id="statTotal">0</div>
                 <div style="font-size:13px; color:var(--text-muted); font-weight:600;">Total productos</div>
             </div>
             <div style="background:white; padding:24px; border-radius:var(--radius-md); border:1px solid var(--border); text-align:center;">
-                <div style="font-size:32px; font-weight:900; color:#6EC1E4;" id="statNino">0</div>
+                <div style="font-size:28px; font-weight:900; color:#6EC1E4;" id="statNino">0</div>
                 <div style="font-size:13px; color:var(--text-muted); font-weight:600;">Niño</div>
+                <div style="font-size:12px; color:#6EC1E4; margin-top:4px;">Ref: <span id="statNinoRef">0</span></div>
             </div>
             <div style="background:white; padding:24px; border-radius:var(--radius-md); border:1px solid var(--border); text-align:center;">
-                <div style="font-size:32px; font-weight:900; color:#F8A4C8;" id="statNina">0</div>
+                <div style="font-size:28px; font-weight:900; color:#F8A4C8;" id="statNina">0</div>
                 <div style="font-size:13px; color:var(--text-muted); font-weight:600;">Niña</div>
+                <div style="font-size:12px; color:#F8A4C8; margin-top:4px;">Ref: <span id="statNinaRef">0</span></div>
             </div>
             <div style="background:white; padding:24px; border-radius:var(--radius-md); border:1px solid var(--border); text-align:center;">
-                <div style="font-size:32px; font-weight:900; color:#FFD966;" id="statBebe">0</div>
+                <div style="font-size:28px; font-weight:900; color:#FFD966;" id="statBebe">0</div>
                 <div style="font-size:13px; color:var(--text-muted); font-weight:600;">Bebé</div>
+                <div style="font-size:12px; color:#D4A017; margin-top:4px;">Ref: <span id="statBebeRef">0</span></div>
             </div>
         </div>
 
@@ -81,30 +84,59 @@
 
             <!-- STEP 1: Category selection -->
             <div class="step-panel" id="step1">
-                <div class="product-form" style="text-align:center; padding:40px 32px;">
-                    <h3 style="margin-bottom:8px; font-size:20px;">¿Para quién es esta prenda?</h3>
-                    <p style="color:var(--text-muted); margin-bottom:28px; font-size:14px;">Selecciona la categoría del producto</p>
-                    <div class="category-selector">
-                        <button class="cat-select-btn" onclick="selectCategory('niño')" data-cat="niño">
-                            <div class="cat-select-icon" style="background:#E8F7FC; color:#6EC1E4;">
-                                <span class="material-icons-round">boy</span>
-                            </div>
-                            <span class="cat-select-name">Niño</span>
-                            <span class="cat-select-sizes">Tallas 4 - 16</span>
-                        </button>
-                        <button class="cat-select-btn" onclick="selectCategory('niña')" data-cat="niña">
-                            <div class="cat-select-icon" style="background:#FFF0F5; color:#F8A4C8;">
-                                <span class="material-icons-round">girl</span>
-                            </div>
-                            <span class="cat-select-name">Niña</span>
-                            <span class="cat-select-sizes">Tallas 4 - 16</span>
-                        </button>
-                        <button class="cat-select-btn" onclick="selectCategory('bebé')" data-cat="bebé">
-                            <div class="cat-select-icon" style="background:#FFF8E7; color:#D4A017;">
-                                <span class="material-icons-round">child_friendly</span>
-                            </div>
-                            <span class="cat-select-name">Bebé</span>
-                            <span class="cat-select-sizes">Tallas 6-9 a 24-36</span>
+                <div class="product-form" style="padding:40px 32px;">
+                    <!-- 1a: Main category -->
+                    <div id="step1Main" style="text-align:center;">
+                        <h3 style="margin-bottom:8px; font-size:20px;">¿Para quién es esta prenda?</h3>
+                        <p style="color:var(--text-muted); margin-bottom:28px; font-size:14px;">Selecciona la categoría del producto</p>
+                        <div class="category-selector">
+                            <button class="cat-select-btn" onclick="pickMainCat('niño')" data-cat="niño">
+                                <div class="cat-select-icon" style="background:#E8F7FC; color:#6EC1E4;">
+                                    <span class="material-icons-round">boy</span>
+                                </div>
+                                <span class="cat-select-name">Niño</span>
+                                <span class="cat-select-sizes">Tallas 4 - 16</span>
+                            </button>
+                            <button class="cat-select-btn" onclick="pickMainCat('niña')" data-cat="niña">
+                                <div class="cat-select-icon" style="background:#FFF0F5; color:#F8A4C8;">
+                                    <span class="material-icons-round">girl</span>
+                                </div>
+                                <span class="cat-select-name">Niña</span>
+                                <span class="cat-select-sizes">Tallas 4 - 16</span>
+                            </button>
+                            <button class="cat-select-btn" onclick="pickMainCat('bebé')" data-cat="bebé">
+                                <div class="cat-select-icon" style="background:#FFF8E7; color:#D4A017;">
+                                    <span class="material-icons-round">child_friendly</span>
+                                </div>
+                                <span class="cat-select-name">Bebé</span>
+                                <span class="cat-select-sizes">Tallas 6-9 a 24-36</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- 1b: Subcategory (shown after main cat is picked) -->
+                    <div id="step1Sub" style="display:none; text-align:center; margin-top:32px; padding-top:28px; border-top:1px solid var(--border);">
+                        <h3 style="margin-bottom:8px; font-size:18px;">¿Qué tipo de producto es?</h3>
+                        <p style="color:var(--text-muted); margin-bottom:20px; font-size:14px;">
+                            Categoría: <span id="mainCatBadge" style="font-weight:700;"></span>
+                        </p>
+                        <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+                            <button class="cat-select-btn" id="subBtnNormal" onclick="selectSubcategory('normal')" style="max-width:200px;">
+                                <div class="cat-select-icon" style="background:#F0FFF4; color:#38A169;">
+                                    <span class="material-icons-round">checkroom</span>
+                                </div>
+                                <span class="cat-select-name">Normal</span>
+                                <span class="cat-select-sizes">Prenda regular</span>
+                            </button>
+                            <button class="cat-select-btn" id="subBtnRef" onclick="selectSubcategory('referencias')" style="max-width:200px;">
+                                <div class="cat-select-icon" style="background:#EBF8FF; color:#3182CE;">
+                                    <span class="material-icons-round">photo_library</span>
+                                </div>
+                                <span class="cat-select-name">Referencias</span>
+                                <span class="cat-select-sizes">Fotos de referencia</span>
+                            </button>
+                        </div>
+                        <button class="btn-secondary" onclick="backToMainCat()" style="margin-top:20px; font-size:13px; padding:8px 16px;">
+                            <span class="material-icons-round" style="font-size:16px;">arrow_back</span> Cambiar categoría
                         </button>
                     </div>
                 </div>
@@ -208,6 +240,9 @@
                 <button class="size-chip" onclick="adminFilter('niño', this)">Niño</button>
                 <button class="size-chip" onclick="adminFilter('niña', this)">Niña</button>
                 <button class="size-chip" onclick="adminFilter('bebé', this)">Bebé</button>
+                <button class="size-chip" style="border-style:dashed;" onclick="adminFilter('niño-referencias', this)">Niño · Ref</button>
+                <button class="size-chip" style="border-style:dashed;" onclick="adminFilter('niña-referencias', this)">Niña · Ref</button>
+                <button class="size-chip" style="border-style:dashed;" onclick="adminFilter('bebé-referencias', this)">Bebé · Ref</button>
             </div>
 
             <div id="adminProductList">
@@ -246,16 +281,29 @@
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2VxamJpenRta3F0dW9rdWdnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MzgyODUsImV4cCI6MjA5MTQxNDI4NX0.r4n2WpMiLD26ZsVB1TiPodW0rpAp2NmBg-bFz3iKIDE';
         const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        const SIZES = {
+        const BASE_SIZES = {
             'niño': ['4', '6', '8', '10', '12', '14', '16'],
             'niña': ['4', '6', '8', '10', '12', '14', '16'],
             'bebé': ['6-9', '9-12', '12-18', '18-24', '24-36']
         };
 
+        function getBaseCat(cat) {
+            return cat.includes('-referencias') ? cat.replace('-referencias', '') : cat;
+        }
+
+        const SIZES = new Proxy(BASE_SIZES, {
+            get(target, key) {
+                return target[key] || target[getBaseCat(key)] || [];
+            }
+        });
+
         const CAT_COLORS = {
             'niño': { bg: '#E8F7FC', color: '#6EC1E4', label: 'Niño' },
             'niña': { bg: '#FFF0F5', color: '#F8A4C8', label: 'Niña' },
-            'bebé': { bg: '#FFF8E7', color: '#D4A017', label: 'Bebé' }
+            'bebé': { bg: '#FFF8E7', color: '#D4A017', label: 'Bebé' },
+            'niño-referencias': { bg: '#D0EDFA', color: '#6EC1E4', label: 'Niño · Ref' },
+            'niña-referencias': { bg: '#FFE0EE', color: '#F8A4C8', label: 'Niña · Ref' },
+            'bebé-referencias': { bg: '#FFF1C6', color: '#D4A017', label: 'Bebé · Ref' }
         };
 
         let currentStep = 1;
@@ -372,14 +420,41 @@
         // ===========================
         // STEP 1: Category Selection
         // ===========================
+        let pendingMainCat = '';
+
+        function pickMainCat(mainCat) {
+            pendingMainCat = mainCat;
+
+            document.querySelectorAll('#step1Main .cat-select-btn').forEach(btn => {
+                btn.classList.toggle('selected', btn.dataset.cat === mainCat);
+            });
+
+            const catInfo = CAT_COLORS[mainCat];
+            const badge = document.getElementById('mainCatBadge');
+            badge.textContent = catInfo.label;
+            badge.style.color = catInfo.color;
+
+            document.getElementById('step1Main').style.opacity = '0.6';
+            document.getElementById('step1Sub').style.display = '';
+            document.getElementById('step1Sub').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function backToMainCat() {
+            pendingMainCat = '';
+            document.getElementById('step1Main').style.opacity = '';
+            document.getElementById('step1Sub').style.display = 'none';
+            document.querySelectorAll('#step1Main .cat-select-btn').forEach(b => b.classList.remove('selected'));
+        }
+
+        function selectSubcategory(sub) {
+            const category = sub === 'referencias' ? `${pendingMainCat}-referencias` : pendingMainCat;
+            selectCategory(category);
+        }
+
         function selectCategory(category) {
             selectedCategory = category;
 
-            document.querySelectorAll('.cat-select-btn').forEach(btn => {
-                btn.classList.toggle('selected', btn.dataset.cat === category);
-            });
-
-            const catInfo = CAT_COLORS[category];
+            const catInfo = CAT_COLORS[category] || CAT_COLORS[getBaseCat(category)];
             const badge = document.getElementById('step2CatBadge');
             badge.textContent = catInfo.label;
             badge.style.background = catInfo.bg;
@@ -608,6 +683,7 @@
         // ===========================
         function cancelForm() {
             selectedCategory = '';
+            pendingMainCat = '';
             currentImageFile = null;
             currentImagePreview = '';
             editingImageUrl = '';
@@ -620,6 +696,8 @@
             document.getElementById('fileInput').value = '';
             document.querySelectorAll('.cat-select-btn').forEach(b => b.classList.remove('selected'));
             document.getElementById('uploadZone').style.display = '';
+            document.getElementById('step1Main').style.opacity = '';
+            document.getElementById('step1Sub').style.display = 'none';
 
             goToStep(1);
         }
@@ -636,11 +714,12 @@
             currentImageFile = null;
             editingImageUrl = product.image_url || '';
 
+            const baseCat = getBaseCat(product.category);
             document.querySelectorAll('.cat-select-btn').forEach(btn => {
-                btn.classList.toggle('selected', btn.dataset.cat === product.category);
+                btn.classList.toggle('selected', btn.dataset.cat === baseCat);
             });
 
-            const catInfo = CAT_COLORS[product.category];
+            const catInfo = CAT_COLORS[product.category] || CAT_COLORS[baseCat];
             document.getElementById('step2CatBadge').textContent = catInfo.label;
             document.getElementById('step2CatBadge').style.background = catInfo.bg;
             document.getElementById('step2CatBadge').style.color = catInfo.color;
@@ -749,7 +828,7 @@
                 'niña': { bg: '#FFF0F5', fg: '#F8A4C8' },
                 'bebé': { bg: '#FFF8E7', fg: '#FFD966' }
             };
-            const c = colors[category] || colors['niño'];
+            const c = colors[getBaseCat(category)] || colors['niño'];
             const initials = (name || 'CR').split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
             return `data:image/svg+xml,${encodeURIComponent(`
                 <svg xmlns="http://www.w3.org/2000/svg" width="200" height="260" viewBox="0 0 200 260">
@@ -789,7 +868,7 @@
                         </div>
                         <div class="admin-product-info">
                             <h4>${product.name}</h4>
-                            <span>${product.sku} · ${product.category} · Talla ${product.size}</span>
+                            <span>${product.sku} · ${(CAT_COLORS[product.category] || CAT_COLORS[getBaseCat(product.category)] || {label: product.category}).label} · Talla ${product.size}</span>
                         </div>
                         <div class="admin-product-actions">
                             <button class="btn-edit" onclick="editProduct('${product.id}')">
@@ -816,6 +895,9 @@
             document.getElementById('statNino').textContent = allProducts.filter(p => p.category === 'niño').length;
             document.getElementById('statNina').textContent = allProducts.filter(p => p.category === 'niña').length;
             document.getElementById('statBebe').textContent = allProducts.filter(p => p.category === 'bebé').length;
+            document.getElementById('statNinoRef').textContent = allProducts.filter(p => p.category === 'niño-referencias').length;
+            document.getElementById('statNinaRef').textContent = allProducts.filter(p => p.category === 'niña-referencias').length;
+            document.getElementById('statBebeRef').textContent = allProducts.filter(p => p.category === 'bebé-referencias').length;
         }
 
         // --- Toast ---

@@ -9,6 +9,7 @@ const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // --- State ---
 let currentCategory = 'todos';
+let currentSubcategory = 'todas';
 let currentSize = 'todas';
 let searchQuery = '';
 let currentProduct = null;
@@ -20,6 +21,19 @@ const SIZES = {
     'niña': ['4', '6', '8', '10', '12', '14', '16'],
     'bebé': ['6-9', '9-12', '12-18', '18-24', '24-36']
 };
+
+const CAT_LABELS = {
+    'niño': 'Niño',
+    'niña': 'Niña',
+    'bebé': 'Bebé',
+    'niño-referencias': 'Niño · Ref',
+    'niña-referencias': 'Niña · Ref',
+    'bebé-referencias': 'Bebé · Ref'
+};
+
+function getBaseCat(cat) {
+    return cat.includes('-referencias') ? cat.replace('-referencias', '') : cat;
+}
 
 // --- Fetch products from Supabase ---
 async function fetchProducts() {
@@ -45,7 +59,7 @@ function getPlaceholderSVG(category, name) {
         'niña': { bg: '#FFF0F5', fg: '#F8A4C8' },
         'bebé': { bg: '#FFF8E7', fg: '#FFD966' }
     };
-    const c = colors[category] || colors['niño'];
+    const c = colors[getBaseCat(category)] || colors['niño'];
     const initials = (name || 'CR').split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
 
     return `data:image/svg+xml,${encodeURIComponent(`
@@ -64,7 +78,14 @@ function renderProducts() {
 
     // Filter products
     let filtered = allProducts.filter(p => {
-        const matchCategory = currentCategory === 'todos' || p.category === currentCategory;
+        let matchCategory;
+        if (currentCategory === 'todos') {
+            matchCategory = true;
+        } else if (currentSubcategory === 'todas') {
+            matchCategory = getBaseCat(p.category) === currentCategory;
+        } else {
+            matchCategory = p.category === `${currentCategory}-${currentSubcategory}`;
+        }
         const matchSize = currentSize === 'todas' || p.size === currentSize;
         const matchSearch = !searchQuery ||
             p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -86,12 +107,13 @@ function renderProducts() {
     grid.innerHTML = filtered.map((product, index) => {
         const imgSrc = product.image_url || getPlaceholderSVG(product.category, product.name);
         const badgeClass = `badge-${product.category}`;
+        const badgeLabel = CAT_LABELS[product.category] || product.category;
 
         return `
             <div class="product-card" onclick="openProduct('${product.id}')" style="animation-delay: ${index * 0.05}s">
                 <div class="card-image">
                     <img src="${imgSrc}" alt="${escapeHtml(product.name)}" loading="lazy">
-                    <span class="card-badge ${badgeClass}">${escapeHtml(product.category)}</span>
+                    <span class="card-badge ${badgeClass}">${escapeHtml(badgeLabel)}</span>
                     <button class="card-download" onclick="event.stopPropagation(); downloadImage('${product.id}')" title="Descargar imagen">
                         <span class="material-icons-round">download</span>
                     </button>
@@ -117,7 +139,7 @@ function renderSizeChips() {
         Object.values(SIZES).forEach(s => s.forEach(sz => allSizes.add(sz)));
         sizes = Array.from(allSizes);
     } else {
-        sizes = SIZES[currentCategory] || [];
+        sizes = SIZES[getBaseCat(currentCategory)] || [];
     }
 
     let html = `<button class="size-chip ${currentSize === 'todas' ? 'active' : ''}" data-size="todas" onclick="filterSize('todas')">Todas</button>`;
@@ -131,14 +153,47 @@ function renderSizeChips() {
 // --- Filter Functions ---
 function filterCategory(category) {
     currentCategory = category;
+    currentSubcategory = 'todas';
     currentSize = 'todas';
 
     document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.category === category);
     });
 
+    renderSubcategoryChips();
     renderSizeChips();
     renderProducts();
+}
+
+function filterSubcategory(sub) {
+    currentSubcategory = sub;
+    currentSize = 'todas';
+
+    document.querySelectorAll('.subcategory-chip').forEach(chip => {
+        chip.classList.toggle('active', chip.dataset.sub === sub);
+    });
+
+    renderSizeChips();
+    renderProducts();
+}
+
+function renderSubcategoryChips() {
+    const container = document.getElementById('subcategoryFilter');
+    const chipsContainer = document.getElementById('subcategoryChips');
+    if (!container || !chipsContainer) return;
+
+    if (currentCategory === 'todos') {
+        container.style.display = 'none';
+        return;
+    }
+
+    container.style.display = '';
+    chipsContainer.innerHTML = `
+        <button class="subcategory-chip size-chip ${currentSubcategory === 'todas' ? 'active' : ''}" data-sub="todas" onclick="filterSubcategory('todas')">Todos</button>
+        <button class="subcategory-chip size-chip ${currentSubcategory === 'referencias' ? 'active' : ''}" data-sub="referencias" onclick="filterSubcategory('referencias')">
+            <span class="material-icons-round" style="font-size:14px; vertical-align:middle;">photo_library</span> Referencias
+        </button>
+    `;
 }
 
 function filterSize(size) {
@@ -168,6 +223,7 @@ function clearSearch() {
 
 function resetFilters() {
     currentCategory = 'todos';
+    currentSubcategory = 'todas';
     currentSize = 'todas';
     searchQuery = '';
     document.getElementById('searchInput').value = '';
@@ -177,6 +233,7 @@ function resetFilters() {
         btn.classList.toggle('active', btn.dataset.category === 'todos');
     });
 
+    renderSubcategoryChips();
     renderSizeChips();
     renderProducts();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -197,7 +254,7 @@ function openProduct(id) {
     document.getElementById('modalDescription').textContent = product.description || 'Sin descripción';
 
     const categoryEl = document.getElementById('modalCategory');
-    categoryEl.textContent = product.category;
+    categoryEl.textContent = CAT_LABELS[product.category] || product.category;
     categoryEl.className = `modal-category badge-${product.category}`;
 
     const modal = document.getElementById('productModal');
@@ -356,6 +413,7 @@ document.addEventListener('keydown', (e) => {
 
 // --- Init ---
 document.addEventListener('DOMContentLoaded', async () => {
+    renderSubcategoryChips();
     renderSizeChips();
 
     // Fetch products from Supabase

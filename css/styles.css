@@ -724,6 +724,30 @@ a {
     color: #7a6200;
 }
 
+.badge-niño-referencias {
+    background: rgba(110, 193, 228, 0.75);
+    color: white;
+    border: 1.5px dashed rgba(255,255,255,0.7);
+}
+
+.badge-niña-referencias {
+    background: rgba(248, 164, 200, 0.75);
+    color: white;
+    border: 1.5px dashed rgba(255,255,255,0.7);
+}
+
+.badge-bebé-referencias {
+    background: rgba(255, 217, 102, 0.75);
+    color: #7a6200;
+    border: 1.5px dashed rgba(122, 98, 0, 0.4);
+}
+
+.subcategory-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
 .card-download {
     position: absolute;
     top: 12px;
