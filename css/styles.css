@@ -556,7 +556,20 @@ a {
     background: white;
     border-bottom: 1px solid var(--border);
     z-index: 100;
-    padding: 16px 24px;
+}
+
+.subcategory-bar {
+    background: linear-gradient(135deg, #f0f9ff 0%, #fdf4ff 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 24px;
+}
+
+.subcategory-bar .filters-inner {
+    justify-content: flex-start;
+}
+
+.filters-bar > .filters-inner {
+    padding: 14px 24px;
 }
 
 .filters-inner {
@@ -746,6 +759,17 @@ a {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
+}
+
+.subcategory-chip.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.subcategory-chip[data-sub="referencias"].active {
+    background: #3182CE;
+    border-color: #3182CE;
 }
 
 .card-download {

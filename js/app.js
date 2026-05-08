@@ -187,11 +187,11 @@ function renderSubcategoryChips() {
         return;
     }
 
-    container.style.display = '';
+    container.style.display = 'block';
     chipsContainer.innerHTML = `
-        <button class="subcategory-chip size-chip ${currentSubcategory === 'todas' ? 'active' : ''}" data-sub="todas" onclick="filterSubcategory('todas')">Todos</button>
+        <button class="subcategory-chip size-chip ${currentSubcategory === 'todas' ? 'active' : ''}" data-sub="todas" onclick="filterSubcategory('todas')">Todas</button>
         <button class="subcategory-chip size-chip ${currentSubcategory === 'referencias' ? 'active' : ''}" data-sub="referencias" onclick="filterSubcategory('referencias')">
-            <span class="material-icons-round" style="font-size:14px; vertical-align:middle;">photo_library</span> Referencias
+            <span class="material-icons-round" style="font-size:14px; vertical-align:text-bottom;">photo_library</span> Referencias
         </button>
     `;
 }

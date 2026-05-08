@@ -205,13 +205,19 @@
 
     <!-- Filters Bar -->
     <section class="filters-bar" id="filtersBar">
-        <div class="filters-inner">
-            <div class="filter-group subcategory-filter" id="subcategoryFilter" style="display:none;">
-                <label class="filter-label">
-                    <span class="material-icons-round">folder_open</span> Tipo:
-                </label>
-                <div class="subcategory-chips" id="subcategoryChips"></div>
+        <!-- Subcategory row: visible only when a category is selected -->
+        <div class="subcategory-bar" id="subcategoryFilter" style="display:none;">
+            <div class="filters-inner">
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <span class="material-icons-round">folder_open</span> Tipo:
+                    </label>
+                    <div class="subcategory-chips" id="subcategoryChips"></div>
+                </div>
             </div>
+        </div>
+        <!-- Size row -->
+        <div class="filters-inner">
             <div class="filter-group">
                 <label class="filter-label">
                     <span class="material-icons-round">straighten</span> Talla:
