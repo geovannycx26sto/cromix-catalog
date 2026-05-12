@@ -8,7 +8,7 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // --- State ---
-let currentCategory = 'todos';
+let currentCategory = 'referencias';
 let currentSize = 'todas';
 let searchQuery = '';
 let currentProduct = null;
@@ -372,11 +372,21 @@ document.addEventListener('keydown', (e) => {
 
 // --- Init ---
 document.addEventListener('DOMContentLoaded', async () => {
+    // Activate Referencias nav by default
+    document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.category === 'referencias');
+    });
+
     renderSizeChips();
 
     // Fetch products from Supabase
     await fetchProducts();
     renderProducts();
+
+    // Scroll directly to catalog (skip hero)
+    setTimeout(() => {
+        document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' });
+    }, 900);
 
     setupAdminAccess();
     window.addEventListener('scroll', handleScroll);

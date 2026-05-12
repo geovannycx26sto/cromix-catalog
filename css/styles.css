@@ -395,9 +395,79 @@ a {
 .hero-subtitle {
     font-size: 17px;
     color: var(--text-muted);
-    margin-bottom: 36px;
+    margin-bottom: 20px;
     font-weight: 600;
     letter-spacing: 0.5px;
+}
+
+/* --- Hero compact variant --- */
+.hero-compact {
+    padding: 40px 24px 36px;
+    min-height: auto;
+}
+
+.hero-compact .hero-brand-name {
+    font-size: 48px;
+}
+
+.hero-compact .hero-brand-crown {
+    width: 36px;
+    height: 22px;
+}
+
+.hero-compact .hero-title {
+    font-size: 22px;
+    margin-bottom: 6px;
+}
+
+/* --- Hero quick filter pills --- */
+.hero-quick-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.hero-pill .material-icons-round {
+    font-size: 18px;
+}
+
+.hero-pill:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.hero-pill-ref {
+    background: #F3F0FF;
+    border-color: #C9B1FF;
+    color: #7C5CFC;
+}
+
+.hero-pill-ref:hover,
+.hero-pill-ref.active-pill {
+    background: #7C5CFC;
+    border-color: #7C5CFC;
+    color: white;
+    box-shadow: 0 4px 14px rgba(124, 92, 252, 0.35);
 }
 
 .hero-categories {
