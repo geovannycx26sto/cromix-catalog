@@ -18,7 +18,8 @@ let allProducts = [];
 const SIZES = {
     'niño': ['4', '6', '8', '10', '12', '14', '16'],
     'niña': ['4', '6', '8', '10', '12', '14', '16'],
-    'bebé': ['6-9', '9-12', '12-18', '18-24', '24-36']
+    'bebé': ['6-9', '9-12', '12-18', '18-24', '24-36'],
+    'referencias': []
 };
 
 // --- Fetch products from Supabase ---
@@ -64,7 +65,12 @@ function renderProducts() {
 
     // Filter products
     let filtered = allProducts.filter(p => {
-        const matchCategory = currentCategory === 'todos' || p.category === currentCategory;
+        const isRef = p.category === 'referencias' || p.size === 'referencia';
+        const matchCategory = currentCategory === 'todos'
+            ? true
+            : currentCategory === 'referencias'
+                ? isRef
+                : p.category === currentCategory && !isRef;
         const matchSize = currentSize === 'todas' || p.size === currentSize;
         const matchSearch = !searchQuery ||
             p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -84,14 +90,16 @@ function renderProducts() {
     emptyState.style.display = 'none';
 
     grid.innerHTML = filtered.map((product, index) => {
+        const isRef = product.category === 'referencias' || product.size === 'referencia';
         const imgSrc = product.image_url || getPlaceholderSVG(product.category, product.name);
-        const badgeClass = `badge-${product.category}`;
+        const badgeClass = isRef ? 'badge-referencia' : `badge-${product.category}`;
+        const badgeLabel = isRef ? 'Referencia' : product.category;
 
         return `
             <div class="product-card" onclick="openProduct('${product.id}')" style="animation-delay: ${index * 0.05}s">
                 <div class="card-image">
                     <img src="${imgSrc}" alt="${escapeHtml(product.name)}" loading="lazy">
-                    <span class="card-badge ${badgeClass}">${escapeHtml(product.category)}</span>
+                    <span class="card-badge ${badgeClass}">${escapeHtml(badgeLabel)}</span>
                     <button class="card-download" onclick="event.stopPropagation(); downloadImage('${product.id}')" title="Descargar imagen">
                         <span class="material-icons-round">download</span>
                     </button>
@@ -110,11 +118,19 @@ function renderProducts() {
 
 function renderSizeChips() {
     const chipsContainer = document.getElementById('sizeChips');
-    let sizes = [];
+    const filtersBar = document.getElementById('filtersBar');
 
+    // Hide size filter for Referencias (no sizes apply)
+    if (currentCategory === 'referencias') {
+        filtersBar.style.display = 'none';
+        return;
+    }
+    filtersBar.style.display = '';
+
+    let sizes = [];
     if (currentCategory === 'todos') {
         const allSizes = new Set();
-        Object.values(SIZES).forEach(s => s.forEach(sz => allSizes.add(sz)));
+        ['niño','niña','bebé'].forEach(cat => SIZES[cat].forEach(sz => allSizes.add(sz)));
         sizes = Array.from(allSizes);
     } else {
         sizes = SIZES[currentCategory] || [];

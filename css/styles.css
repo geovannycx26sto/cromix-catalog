@@ -724,6 +724,46 @@ a {
     color: #7a6200;
 }
 
+.badge-referencia {
+    background: rgba(124, 92, 252, 0.9);
+    color: white;
+}
+
+.nav-link-ref {
+    background: linear-gradient(135deg, #F3F0FF, #ede8ff);
+    color: #7C5CFC !important;
+    border: 1px solid #C9B1FF;
+}
+
+.nav-link-ref.active,
+.nav-link-ref:hover {
+    background: #7C5CFC !important;
+    color: white !important;
+    border-color: #7C5CFC;
+}
+
+.mobile-nav-link-ref {
+    color: #7C5CFC !important;
+}
+
+.mobile-nav-link-ref:hover,
+.mobile-nav-link-ref.active {
+    background: #F3F0FF !important;
+    color: #7C5CFC !important;
+}
+
+.size-chip-ref {
+    border-color: #C9B1FF;
+    color: #7C5CFC;
+}
+
+.size-chip-ref.active,
+.size-chip-ref:hover {
+    background: #7C5CFC;
+    color: white;
+    border-color: #7C5CFC;
+}
+
 .card-download {
     position: absolute;
     top: 12px;

@@ -1,0 +1,8 @@
+VIDEO 1/
+*.mp4
+*.mov
+*.avi
+*.mkv
+node_modules/
+.DS_Store
+Thumbs.db
